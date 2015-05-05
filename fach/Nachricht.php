@@ -30,13 +30,17 @@ class Nachricht {
 		return $this->datum;
 	}
 	
-	public function sucheNachHashtag($hashtag){
+	public static function sucheNachHashtag($hashtag){
 		require_once('../hilf/db_helper.php');
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT nh.Nachricht FROM NachrichtHashtag nh, Hashtag h WHERE nh.Hashtag = h.ID AND h.Tag = :Tag");
 		$stmt->bindParam(':Tag', $hashtag);
 		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$result = Array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			$result[] = new Nachricht($row["Nachricht"]);
+		}
+		return $result;
 	}
 	
 }
