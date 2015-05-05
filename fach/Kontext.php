@@ -25,7 +25,7 @@ class Kontext {
 		$benutzer = Benutzer::getBenutzer($nickname);
 		if ($benutzer->pruefePasswort($passwort)){
 			session_regenerate_id();
-			$_SESSION["benutzer"] = $benutzer;
+			$_SESSION["benutzer"] = $benutzer->getNickname();
 			$this->benutzer = $benutzer;
 		} else {
 			throw new Exception("UngueltigesPasswort");
