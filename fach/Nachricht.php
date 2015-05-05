@@ -2,20 +2,41 @@
 
 class Nachricht {
 	
+	private $benutzer;
+	private $inhalt;
+	private $datum;
+	
+	public function __construct($id){
+		require_once("../hilf/db_helper.php");
+		$dbh = db_connect();
+		$stmt = $dbh->prepare("SELECT Benutzer, Inhalt, Datum FROM Nachricht WHERE ID = :ID");
+		$stmt->bindParam(':ID', htmlentities($id));
+		$stmt->execute();
+		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		$this->inhalt = $res["Inhalt"];
+		$this->benutzer = $res["Benutzer"];
+		$this->datum = new DateTime($res["Datum"]);
+	} 
+	
 	public function getInhalt(){
-		return "Dummy-Inhalt mit #Hashtag";
+		return $this->inhalt;
 	}
 	
 	public function getBenutzer(){
-		return new Benutzer();
+		return Benutzer::getBenutzer($this->benutzer);
 	}
 	
 	public function getDatum(){
-		return new Date();
+		return $this->datum;
 	}
 	
 	public function sucheNachHashtag($hashtag){
-		return Array();
+		require_once('../hilf/db_helper.php');
+		$dbh = db_connect();
+		$stmt = $dbh->prepare("SELECT nh.Nachricht FROM NachrichtHashtag nh, Hashtag h WHERE nh.Hashtag = h.ID AND h.Tag = :Tag");
+		$stmt->bindParam(':Tag', $hashtag);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 }
