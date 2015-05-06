@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 05. Mai 2015 um 20:20
+-- Erstellungszeit: 06. Mai 2015 um 15:13
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -28,12 +28,11 @@ USE `hausarbeit_twitter`;
 -- Tabellenstruktur für Tabelle `benutzer`
 --
 
-DROP TABLE IF EXISTS `benutzer`;
 CREATE TABLE IF NOT EXISTS `benutzer` (
-  `Nickname` varchar(15) COLLATE utf8_german2_ci NOT NULL,
-  `Vorname` text COLLATE utf8_german2_ci NOT NULL,
-  `Nachname` text COLLATE utf8_german2_ci NOT NULL,
-  `Passwort` varchar(20) COLLATE utf8_german2_ci NOT NULL
+  `Nickname` varchar(40) COLLATE utf8_german2_ci NOT NULL,
+  `Vorname` varchar(40) COLLATE utf8_german2_ci NOT NULL,
+  `Nachname` varchar(40) COLLATE utf8_german2_ci NOT NULL,
+  `Passwort` varchar(200) COLLATE utf8_german2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 
 -- --------------------------------------------------------
@@ -42,19 +41,10 @@ CREATE TABLE IF NOT EXISTS `benutzer` (
 -- Tabellenstruktur für Tabelle `folgen`
 --
 
-DROP TABLE IF EXISTS `folgen`;
 CREATE TABLE IF NOT EXISTS `folgen` (
-  `Folgender` varchar(15) COLLATE utf8_german2_ci NOT NULL,
-  `Gefolgter` varchar(15) COLLATE utf8_german2_ci NOT NULL
+  `Folgender` varchar(40) COLLATE utf8_german2_ci NOT NULL,
+  `Gefolgter` varchar(40) COLLATE utf8_german2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
-
---
--- RELATIONEN DER TABELLE `folgen`:
---   `Folgender`
---       `benutzer` -> `Nickname`
---   `Gefolgter`
---       `benutzer` -> `Nickname`
---
 
 -- --------------------------------------------------------
 
@@ -62,11 +52,10 @@ CREATE TABLE IF NOT EXISTS `folgen` (
 -- Tabellenstruktur für Tabelle `hashtag`
 --
 
-DROP TABLE IF EXISTS `hashtag`;
 CREATE TABLE IF NOT EXISTS `hashtag` (
 `ID` int(11) NOT NULL,
-  `Tag` varchar(15) COLLATE utf8_german2_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+  `Tag` varchar(40) COLLATE utf8_german2_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 
 -- --------------------------------------------------------
 
@@ -74,19 +63,34 @@ CREATE TABLE IF NOT EXISTS `hashtag` (
 -- Tabellenstruktur für Tabelle `nachricht`
 --
 
-DROP TABLE IF EXISTS `nachricht`;
 CREATE TABLE IF NOT EXISTS `nachricht` (
 `ID` int(11) NOT NULL,
-  `Benutzer` varchar(15) COLLATE utf8_german2_ci NOT NULL,
+  `Benutzer` varchar(40) COLLATE utf8_german2_ci NOT NULL,
   `Inhalt` text COLLATE utf8_german2_ci NOT NULL,
-  `Datum` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+  `Datum` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 
 --
--- RELATIONEN DER TABELLE `nachricht`:
---   `Benutzer`
---       `benutzer` -> `Nickname`
+-- Trigger `nachricht`
 --
+DELIMITER //
+CREATE TRIGGER `nachricht_insert_hashtag` AFTER INSERT ON `nachricht`
+ FOR EACH ROW BEGIN
+SET @REST = NEW.Inhalt;
+WHILE @REST LIKE '%#%' DO
+	SET @STARTPOS = LOCATE('#', @REST);
+    SET @ENDPOS = LOCATE(' ', @REST, @STARTPOS);
+    SET @TAG = IF(@ENDPOS>0,SUBSTRING(@REST, @STARTPOS+1, @ENDPOS-@STARTPOS),SUBSTRING(@REST, @STARTPOS+1));
+    SET @REST = SUBSTRING(@REST, @ENDPOS);
+    IF NOT EXISTS(SELECT ID FROM hashtag WHERE Tag = @TAG) THEN
+      INSERT INTO hashtag(Tag) VALUES(@TAG);    
+    END IF;
+    SET @ID = (SELECT ID FROM hashtag WHERE Tag = @TAG);  
+    INSERT INTO nachricht_hashtag(Nachricht, Hashtag) VALUES(NEW.ID, @ID);
+END WHILE;
+END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -94,19 +98,10 @@ CREATE TABLE IF NOT EXISTS `nachricht` (
 -- Tabellenstruktur für Tabelle `nachricht_hashtag`
 --
 
-DROP TABLE IF EXISTS `nachricht_hashtag`;
 CREATE TABLE IF NOT EXISTS `nachricht_hashtag` (
   `Nachricht` int(11) NOT NULL,
   `Hashtag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
-
---
--- RELATIONEN DER TABELLE `nachricht_hashtag`:
---   `Nachricht`
---       `nachricht` -> `ID`
---   `Hashtag`
---       `hashtag` -> `ID`
---
 
 --
 -- Indizes der exportierten Tabellen
@@ -150,12 +145,12 @@ ALTER TABLE `nachricht_hashtag`
 -- AUTO_INCREMENT für Tabelle `hashtag`
 --
 ALTER TABLE `hashtag`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT für Tabelle `nachricht`
 --
 ALTER TABLE `nachricht`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
 --
 -- Constraints der exportierten Tabellen
 --
