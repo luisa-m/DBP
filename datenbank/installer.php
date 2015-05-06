@@ -2,6 +2,7 @@
 
 fuehreSQLDateiAus('_DATABASE_TWITTER_.sql');
 
+// Ermöglicht die Ausführung von SQL-Dateien mit Delimiter-Wechsel
 function fuehreSQLDateiAus($path){
 	require_once '../hilf/db_helper.php';
 	$dbh = db_connect_wo_database();	
