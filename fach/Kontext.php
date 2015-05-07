@@ -5,6 +5,7 @@ class Kontext {
 	private $benutzer;
 	
 	public function __construct(){
+		require_once("Benutzer.php");
 		session_start();
 		if (isset($_SESSION["benutzer"])){
 			$this->benutzer = Benutzer::getBenutzer($_SESSION["benutzer"]);

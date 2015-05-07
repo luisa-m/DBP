@@ -7,7 +7,7 @@ class Benutzer{
 	public function __construct($id){
 		$this->$id = $id;
 		
-		require_once(dirname($_SERVER['SCRIPT_FILENAME'])."/../hilf/db_helper.php");
+		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT Nickname, Vorname, Nachname, Passwort FROM Benutzer WHERE ID = :ID");
 		$stmt->bindParam(':ID', htmlentities($id));
