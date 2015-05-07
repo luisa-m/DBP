@@ -9,11 +9,13 @@
 <div align=center>
 	<h1>Willkommen bei Twitter 2.0 <Br> Die neusten Updates für dich auf einem Blick</h1>
 	<table class="t1">
-		<tr style="width: 358px; ">
-				<td><input required type="text" name="name" placeholder="Name"/></td>
+		<tr">
+				<td>Nickname</td>
+				<td><input required type="text" name="nickname" placeholder="Nickname" value="<?php if(!empty($_POST["nickname"])){echo $_POST["nickname"];}?>"/></td>
 		</tr>
 		<tr>
-				<td><input required type="password" name="password1" placeholder="Passwort"/></td>
+				<td>Passwort</td>
+				<td><input required type="password" name="password" placeholder="Passwort"/></td>
 		</tr>
 	</table>
 	<br>

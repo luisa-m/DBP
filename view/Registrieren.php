@@ -10,7 +10,7 @@
 	<h1>Willkommen bei Twitter 2.0 <Br> Registriere dich jetzt und bleibe in Verbindung</h1>
 	<form  action="" method="post">
 	<table class="t1">
-		<tr style="width: 358px; ">
+		<tr>
 				<td>Nickname</td>
 				<td><input required type="text" name="nickname" placeholder="Nickname" value="<?php if(!empty($_POST["nickname"])){echo $_POST["nickname"];}?>"/></td>
 		</tr> <tr>
@@ -30,7 +30,7 @@
 	<br>
 		<input type="submit" name="registrieren" value="Registrieren">
 	</form>
-	<form action="Anmelden.html">
+	<form action="Anmelden.php">
 		<input type="submit" name="abbrechen" value="Abbrechen">
 	</form>
 	<?php
