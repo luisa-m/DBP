@@ -1,14 +1,21 @@
 ﻿@CHARSET "UTF-8";
 body{
-		background-color: tomato;
+	background-color: tomato;
 }
-		input[type=submit] {
-			width: 70pt; margin: 2pt; background-color: white
+input[type=text], input[type=password]
+	{width: 350px}
+
+input[type=submit] {
+	width: 70pt; margin: 2pt; background-color: white
 }
 h1{
-		color:white; font-size: 16pt
+	color:white; font-size: 16pt
 }
 .t1
 {
-		color:white;
+	color:white;
+}
+.fehlermeldung
+{
+	color: white;>
 }

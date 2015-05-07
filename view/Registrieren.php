@@ -1,4 +1,32 @@
-﻿<!DOCTYPE html>
+﻿<?php 
+require_once('../fach/Benutzer.php');
+
+
+if(isset($_REQUEST["registrieren"]))
+{
+	$benutzer = new Benutzer($_REQUEST["nickname"]);
+	if(strcmp($_POST["password1"],$_POST["password2"]) == 0)
+	{
+		try
+		{
+			$benutzer->registrieren($_REQUEST["nickname"],$_REQUEST["vorname"],$_REQUEST["nachname"],$_REQUEST["password1"]);
+			header("location:Hauptseite.php");
+		}
+		catch(Exception $e)
+		{
+			$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e.getMessage() . ")";
+		}
+	}
+	else {
+		$Fehlermeldung = "Die Passwörter stimmen nicht überein. Bitte überprüfen Sie Ihre Eingaben.";
+	}
+}
+
+if(!isset($_REQUEST["registrieren"]) || isset($Fehlermeldung))
+{
+	?>
+
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -32,31 +60,14 @@
 	</form>
 	<form action="Anmelden.php">
 		<input type="submit" name="abbrechen" value="Abbrechen">
-	</form>
-	<?php
-		if(isset($_REQUEST["registrieren"]))
-		{
-		if(strcmp($_POST["password1"],$_POST["password2"]) == 0)
-		{
-			try
-				{
-					$name = $_POST["name"];
-					$password1 = $_POST["password1"];
-					$dbh = new PDO('mysql:host=localhost;dbname=hausarbeitTEST', 'root', '');	
-					$res = $dbh->query("INSERT INTO nutzer(name,passwort) VALUES ('$name','$password1');");
-					$dbh=null;
-				}
-				catch(PDOException $e)
-				{
-					echo "Datenbank-Fehler: " . $e->getMessage();
-				}
-		}
-		else
-		{
-			echo "<div style=\"color: white;\">Die Passwörter stimmen nicht überein. Bitte überprüfen Sie ihre Eingaben.</div>";
-		}		
-		}
-	?>	
+	</form>	
+	<?php 
+	if(isset($Fehlermeldung))
+	{
+		echo '<div class="fehlermeldung">' . $Fehlermeldung . '</div>';
+	}
+	?>
 </div>		
 </body>
 </html>
+<?php } ?>
