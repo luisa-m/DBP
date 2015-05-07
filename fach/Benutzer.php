@@ -1,5 +1,5 @@
 <?php
-class Benutzer{
+class Benutzer implements JsonSerializable {
 	
 	private $id;
 	
@@ -9,7 +9,7 @@ class Benutzer{
 		
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
-		$stmt = $dbh->prepare("SELECT Nickname, Vorname, Nachname, Passwort FROM Benutzer WHERE ID = :ID");
+		$stmt = $dbh->prepare("SELECT Nickname, Vorname, Nachname, Passwort FROM Benutzer WHERE nickname = :ID");
 		$stmt->bindParam(':ID', htmlentities($id));
 		$stmt->execute();
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -115,6 +115,8 @@ class Benutzer{
 	 * @param String $passwort Passwort des neuen Benutzers
 	 */
 	public static function registrieren($nickname,$vorname,$nachname,$passwort){
+		$dbh = db_connect();
+		$stmt = $dbh->prepare("SELECT Nickname, Vorname, Nachname, Passwort FROM Benutzer WHERE nickname = :ID");
 		$stmt = $dbh->prepare("INSERT INTO benutzer(Nickname ,Vorname, Nachname, Passwort) VALUES(:Nickname,:Vorname,:Nachname,:Passwort)");
 		$stmt->bindParam(':Nickname', htmlentities($nickname));
 		$stmt->bindParam(':Vorname', htmlentities($vorname));
@@ -132,6 +134,14 @@ class Benutzer{
 		$stmt->bindParam(':Folgender', htmlentities($id));
 		$stmt->bindParam(':Gefolgter', htmlentities($nickname));
 		$stmt->execute();		
+	}
+	
+	public function jsonSerialize(){
+		return [
+			'nickname' => $this->getNickname(),
+			'vorname' => $this->getVorname(),
+			'nachname' => $this->getNachname()		
+		];
 	}
 	
 }
