@@ -46,21 +46,17 @@ class Benutzer{
 	
 	/**
 	 * Prüft, ob das eingegebene Passwort korrekt ist.
-	 * @param unknown $pw Passwort des Benutzers 
-	 * @return boolean True = Passwort ist korrekt; False = Passwort ist nicht korrekt
+	 * @param String $pw Passwort des Benutzers 
+	 * @return boolean True = Passwort ist korrekt; False = Passwort ist nicht korrekt.
 	 */
 	public function pruefePasswort($pw){
-		
-		if($pw == $this->passwort){
-			return true;
-		}else{
-			return false;
-		}
+		 
+		return (hash("sha256", $pw) == $this->passwort);
 	}
 	
 	/**
 	 * Gibt die ID's der Benutzer, denen ein Benutzer folgt, zurück.
-	 * @return multitype:Benutzer
+	 * @return Array von Benutzer
 	 */
 	public function getGefolgte(){
 		$stmt = $dbh->prepare("SELECT Gefolgter FROM Folgen WHERE Folgender = :ID");
@@ -97,9 +93,11 @@ class Benutzer{
 	}
 	
 	public static function getBenutzerliste(){
+		
 	}
 	
 	public static function getBenutzer($nickname){
+		return new Benutzer($nickname);
 	}
 	
 	public static function registrieren($nickname,$vorname,$nachname,$passwort){
