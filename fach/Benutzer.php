@@ -43,7 +43,6 @@ class Benutzer{
 		return $this->nachname;
 	}
 	
-	
 	/**
 	 * Prüft, ob das eingegebene Passwort korrekt ist.
 	 * @param String $pw Passwort des Benutzers 
@@ -71,39 +70,68 @@ class Benutzer{
 		return $gefolgteBenutzer;
 	}
 	
-	
-	
+	/**
+	 * Gibt alle Nachrichten der Benutzer, denen ein Benutzer folgt, aus.
+	 * @return String Nachricht
+	 */	
 	public function getGefolgteNachrichten(){
-		$stmt = $dbh->prepare("SELECT Inhalt FROM Nachricht WHERE Folgender = :ID");
+		$stmt = $dbh->prepare("SELECT Inhalt FROM nachricht n, folgen f WHERE f.Folgender = :ID AND f.Gefolgter = n.Benutzer");
 		$stmt->bindParam(':ID', htmlentities($id));
 		$stmt->execute();
 		$res = $stmt->fetchAll();
 		$gefolgteNachrichten = array();
-		foreach ($res as $gefolgter){
-			$gefolgteNachrichten[]= new Nachricht($inhalt["Inhalt"]);
+		foreach ($res as $nachricht){
+			$gefolgteNachrichten[]= new Nachricht($nachricht["ID"]);
 		}
 		
 		return $gefolgteNachrichten;
 	}
 	
+	/**
+	 * Der aktuelle Benutzer schreibt eine neue Nachricht.
+	 * @param String $inhalt
+	 */
 	public function schreibeNachricht($inhalt){
-		$stmt = $dbh->prepare("UPDATE Nachricht SET ID = :ID, Benutzer WHERE Folgender = :ID");
+		$stmt = $dbh->prepare("INSERT INTO nachricht(Benutzer, Inhalt) VALUES(:ID,:Inhalt)");
 		$stmt->bindParam(':ID', htmlentities($id));
+		$stmt->bindParam(':Inhalt', htmlentities($inhalt));
 		$stmt->execute();
 	}
 	
-	public static function getBenutzerliste(){
-		
-	}
-	
+	/**
+	 * Der aktuelle Benutzer wird zurückgegeben.
+	 * @param String $nickname
+	 * @return Benutzer aktueller Benutzer
+	 */
 	public static function getBenutzer($nickname){
 		return new Benutzer($nickname);
 	}
 	
+	/**
+	 * Ein neuer Benutzer wird angelegt.
+	 * @param String $nickname Nickname des neuen Benutzers
+	 * @param String $vorname Vorname des neuen Benutzers
+	 * @param String $nachname Nachname des neuen Benutzers
+	 * @param String $passwort Passwort des neuen Benutzers
+	 */
 	public static function registrieren($nickname,$vorname,$nachname,$passwort){
+		$stmt = $dbh->prepare("INSERT INTO benutzer(Nickname ,Vorname, Nachname, Passwort) VALUES(:Nickname,:Vorname,:Nachname,:Passwort)");
+		$stmt->bindParam(':Nickname', htmlentities($nickname));
+		$stmt->bindParam(':Vorname', htmlentities($vorname));
+		$stmt->bindParam(':Nachname', htmlentities($nachname));
+		$stmt->bindParam(':Passwort', (hash("sha256", $passwort)));		
+		$stmt->execute();
 	}
 	
+	/**
+	 * Der aktuelle Benutzer folgt einem anderen Benutzer.
+	 * @param String $nickname
+	 */
 	public function folgen($nickname){
+		$stmt = $dbh->prepare("INSERT INTO folgen(Folgen, Gefolgter) VALUES(:Folgender,:Gefolgter)");
+		$stmt->bindParam(':Folgender', htmlentities($id));
+		$stmt->bindParam(':Gefolgter', htmlentities($nickname));
+		$stmt->execute();		
 	}
 	
 }
