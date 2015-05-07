@@ -5,7 +5,7 @@ class Benutzer{
 	
 	
 	public function __construct($id){
-		$this->$id = $id;
+		$this->id = $id;
 		
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
