@@ -11,7 +11,7 @@ if($path[0] == "gefolgt" && $path[1] == "nachrichten")
 	$nachrichten = $benutzer->getGefolgteNachrichten();
 	echo json_encode($nachrichten);
 }
-elseif($path[0] == "gefolgt" && $path[1] == " benutzer")
+elseif($path[0] == "gefolgt" && $path[1] == "benutzer")
 {
 	require_once('fach/Benutzer.php');
 	$follower = $benutzer->getGefolgte();
