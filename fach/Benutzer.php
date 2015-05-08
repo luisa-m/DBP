@@ -58,8 +58,10 @@ class Benutzer implements JsonSerializable {
 	 * @return Array von Benutzer
 	 */
 	public function getGefolgte(){
+		require_once("/../hilf/db_helper.php");
+		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT Gefolgter FROM Folgen WHERE Folgender = :ID");
-		$stmt->bindParam(':ID', htmlentities($id));
+		$stmt->bindParam(':ID', htmlentities($this->id));
 		$stmt->execute();
 		$res = $stmt->fetchAll();
 		$gefolgteBenutzer = array();
@@ -75,8 +77,11 @@ class Benutzer implements JsonSerializable {
 	 * @return String Nachricht
 	 */	
 	public function getGefolgteNachrichten(){
-		$stmt = $dbh->prepare("SELECT Inhalt FROM nachricht n, folgen f WHERE f.Folgender = :ID AND f.Gefolgter = n.Benutzer");
-		$stmt->bindParam(':ID', htmlentities($id));
+		require_once("Nachricht.php");
+		require_once("/../hilf/db_helper.php");
+		$dbh = db_connect();
+		$stmt = $dbh->prepare("SELECT ID FROM nachricht n, folgen f WHERE f.Folgender = :ID AND f.Gefolgter = n.Benutzer");
+		$stmt->bindParam(':ID', htmlentities($this->id));
 		$stmt->execute();
 		$res = $stmt->fetchAll();
 		$gefolgteNachrichten = array();
@@ -92,8 +97,10 @@ class Benutzer implements JsonSerializable {
 	 * @param String $inhalt
 	 */
 	public function schreibeNachricht($inhalt){
+		require_once("/../hilf/db_helper.php");
+		$dbh = db_connect();
 		$stmt = $dbh->prepare("INSERT INTO nachricht(Benutzer, Inhalt) VALUES(:ID,:Inhalt)");
-		$stmt->bindParam(':ID', htmlentities($id));
+		$stmt->bindParam(':ID', htmlentities($this->id));
 		$stmt->bindParam(':Inhalt', htmlentities($inhalt));
 		$stmt->execute();
 	}
@@ -130,8 +137,10 @@ class Benutzer implements JsonSerializable {
 	 * @param String $nickname
 	 */
 	public function folgen($nickname){
+		require_once("/../hilf/db_helper.php");
+		$dbh = db_connect();
 		$stmt = $dbh->prepare("INSERT INTO folgen(Folgen, Gefolgter) VALUES(:Folgender,:Gefolgter)");
-		$stmt->bindParam(':Folgender', htmlentities($id));
+		$stmt->bindParam(':Folgender', htmlentities($this->id));
 		$stmt->bindParam(':Gefolgter', htmlentities($nickname));
 		$stmt->execute();		
 	}
