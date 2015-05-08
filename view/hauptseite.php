@@ -11,26 +11,30 @@ require_once("../fach/Nachricht.php");
 <!-- <link rel="shortcut icon" type="image/x-icon" href="Hahn.jpg"> -->
 <title>Kikeriki</title>
 </head>
+<body>
 	<nav>
+	<div id="nav_links">
 		<a href="hauptseite.html" id="start_button">Hauptseite</a>
 		<input type="text" placeholder="Suchhashtag" id="suchehashtag">
+	</div>
+	<div id="nav_rechts">
 		<span id="benutzername">
-			<?php //echo (new Kontext())->getBenutzer()->getNickname() ?>
-			Nickname
+			<?php echo (new Kontext())->getBenutzer()->getNickname() ?>
 		</span>
-		<a href="abgemeldet.html" id="abmelden_button">Abmelden</a>
+		<a href="Anmelden.php" id="abmelden_button">Abmelden</a>
+	</div>
 	</nav>
 	
 	<main>
-		<table>
+		<table id="table">
 			<tbody>
 				<tr>
-					<td>
-						<textarea>Ihre Nachricht</textarea>
+					<td id="aktions_bereich">
+						<textarea id="nachricht" placeholder="Ihre Nachricht"></textarea> <br>
 						<button>Abschicken</button>
 						<p>evtl. Wolke</p>
 					</td>
-					<td>
+					<td id="nachrichten_anzeige">
 						<p>Nachricht 1</p>
 						<p>Nachricht 2</p>
 						<p>Nachricht 3</p>
@@ -39,7 +43,5 @@ require_once("../fach/Nachricht.php");
 			</tbody>
 		</table>
 	</main>
-<body>
-	
 </body>
 </html>

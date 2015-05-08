@@ -38,7 +38,7 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 	<h1>Willkommen bei Twitter 2.0 <Br> Die neusten Updates für dich auf einem Blick</h1>
 	<form action="" method="POST">
 	<table class="t1">
-		<tr">
+		<tr>
 				<td>Nickname</td>
 				<td><input required type="text" name="nickname" placeholder="Nickname" value="<?php if(!empty($_POST["nickname"])){echo $_POST["nickname"];}?>"/></td>
 		</tr>
