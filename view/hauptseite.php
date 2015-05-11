@@ -8,14 +8,15 @@ require_once("../fach/Nachricht.php");
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
+<script type="text/javascript" src="script.js"></script>
 <!-- <link rel="shortcut icon" type="image/x-icon" href="Hahn.jpg"> -->
 <title>Kikeriki</title>
 </head>
-<body>
+<body onload='zeigeTimeline("nachrichten_anzeige")';>
 	<nav>
 	<div id="nav_links">
 		<a href="hauptseite.html" id="start_button">Hauptseite</a>
-		<input type="text" placeholder="Suchhashtag" id="suchehashtag">
+		<input type="text" placeholder="Suchhashtag" id="suchehashtag" onkeyup="sucheingabe(this, event, 'nachrichten_anzeige');">
 	</div>
 	<div id="nav_rechts">
 		<span id="benutzername">

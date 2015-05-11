@@ -1,23 +1,29 @@
 /**
  * 
  */
-function sucheHashtag(hashtag){
+function sucheHashtag(hashtag, displayElem){
 	var req = new XMLHttpRequest();
 	req.open("GET", "../json.php/hashtag/"+hashtag, true);
 	req.onreadystatechange = function(e){
 		if (req.readyState == 4){
-			document.getElementById("ausgabe").innerHTML = formatiereNachrichten(JSON.parse(req.responseText));
+			document.getElementById(displayElem).innerHTML = formatiereNachrichten(JSON.parse(req.responseText));
 		}
 	};
 	req.send();	
 }
 
-function zeigeTimeline(){
+function sucheingabe(self, e, displayElem){
+	if (e.keyCode == 13){
+		sucheHashtag(self.value, displayElem)
+	}
+}
+
+function zeigeTimeline(displayElem){
 	var req = new XMLHttpRequest();
 	req.open("GET", "../json.php/gefolgt/nachrichten", true);
 	req.onreadystatechange = function(e){
 		if (req.readyState == 4){
-			document.getElementById("ausgabe").innerHTML = formatiereNachrichten(JSON.parse(req.responseText));
+			document.getElementById(displayElem).innerHTML = formatiereNachrichten(JSON.parse(req.responseText));
 		}
 	};
 	req.send();		
