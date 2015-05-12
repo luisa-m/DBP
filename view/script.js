@@ -18,6 +18,27 @@ function sucheingabe(self, e, displayElem){
 	}
 }
 
+function folgeBenutzer(benutzername, folgenElem) {
+	console.log("folge benutzer " + benutzername);
+	var req = new XMLHttpRequest();
+	req.open("GET", "../json.php/folgen/"+benutzername, true);
+	req.onreadystatechange = function(e){
+		if (req.readyState == 4){
+			console.log(req.responseText);
+			if (req.responseText == "+ok") {
+				zeigeGefolgte(folgenElem);
+			}
+		}
+	};
+	req.send();			
+}
+
+function folgenEingabe(self, e, folgenElem) {
+	if (e.keyCode == 13) {
+		folgeBenutzer(self.value, folgenElem)
+	}
+}
+
 function zeigeTimeline(displayElem){
 	var req = new XMLHttpRequest();
 	req.open("GET", "../json.php/gefolgt/nachrichten", true);
@@ -29,12 +50,12 @@ function zeigeTimeline(displayElem){
 	req.send();		
 }
 
-function zeigeGefolgte(){
+function zeigeGefolgte(anzeigeElem){
 	var req = new XMLHttpRequest();
 	req.open("GET", "../json.php/gefolgt/benutzer", true);
 	req.onreadystatechange = function(e){
 		if (req.readyState == 4){
-			document.getElementById("ausgabe").innerHTML = formatiereBenutzer(JSON.parse(req.responseText));
+			document.getElementById(anzeigeElem).innerHTML = formatiereBenutzer(JSON.parse(req.responseText));
 		}
 	};
 	req.send();		

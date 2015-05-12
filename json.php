@@ -23,4 +23,14 @@ elseif($path[0] == "hashtag")
 	$hashtags = Nachricht::sucheNachHashtag($path[1]);
 	echo json_encode($hashtags);
 }
+elseif($path[0] == "folgen")
+{
+	require_once('fach/Benutzer.php');
+	try {
+		$benutzer->folgen($path[1]);
+		echo "+ok";
+	} catch (Exception $e) {
+		echo "-err".$e->getMessage();
+	}
+}
 ?>

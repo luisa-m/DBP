@@ -139,10 +139,10 @@ class Benutzer implements JsonSerializable {
 	public function folgen($nickname){
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
-		$stmt = $dbh->prepare("INSERT INTO folgen(Folgen, Gefolgter) VALUES(:Folgender,:Gefolgter)");
+		$stmt = $dbh->prepare("INSERT INTO folgen(Folgender, Gefolgter) VALUES(:Folgender,:Gefolgter)");
 		$stmt->bindParam(':Folgender', htmlentities($this->id));
 		$stmt->bindParam(':Gefolgter', htmlentities($nickname));
-		$stmt->execute();		
+		$stmt->execute();
 	}
 	
 	public function jsonSerialize(){
