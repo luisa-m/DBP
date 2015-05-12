@@ -1,14 +1,20 @@
+@charset "UTF-8";
+
 /* html & body style */
-* {
+p, div, main, nav, span, table, tr, td {
 	padding: 0px;
 	margin: 0px;
 }
 
 body {
 	background-color: #FF463E;
-	font-family: Verdana;
+	font-family: Arial, Verdana, sans-serif;
 	padding-bottom: 30px;
 	padding-top: 0px;
+}
+
+textarea {
+	font-family: inherited;
 }
 
 nav {
@@ -17,27 +23,19 @@ nav {
 	left: 0px;
 	width: 100%;
 	background-color: #BF3D28;
-	font-family: Verdana;
-	padding: 5px 0;
+	color: #FFF;
+	padding: 5px 10px 5px 0px;
+	box-sizing: border-box;
 	display: flex;
-	height: 25px;
+	height: 40px;
+}
+
+nav * {
+	color: #FFF;
 }
 
 main {
 	margin-top:40px;
-}
-
-#start_button {
-	display: inline-block;
-	margin: -5px 0;
-	padding: 0 2.5%;
-	width: 35px;
-	height: 35px;
-	background-color: #FFF;
-	background-image:url(Icon.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
 }
 
 #nav_links
@@ -52,26 +50,57 @@ main {
 	text-align: right;
 }
 
+#start_button {
+	display: inline-block;
+	margin: -5px 0;
+	padding: 0 2.5%;
+	width: 40px;
+	height: 40px;
+	background-color: #FFF;
+	background-image:url(Icon.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	float: left;
+}
+
 #suchehashtag {
-	margin: 5px;
+	margin: 0 5px;
 	color: rgb(80, 80, 80);
+	height: 30px;
+	padding: 2.5px 5px;
 	width: 60%;
-	margin-left: 2.5%;	
+	max-width: 350px;
+	clear: both;	
+	box-sizing: border-box;
 }
 
 #benutzername {
-	margin: 5px;
-	color: rgb(80, 80, 80);
-	width: 10%;
-	margin-right: 2.5%;
+	line-height: 30px;
+	font-weight: bold;
 }
 
-#abgemeldet_button {
-	margin: 5px;
-	color: rgb(80, 80, 80);
-	width: 10%;
-	margin-right: 2.5%;
+#abmelden_button {
+	text-decoration: none;
+	line-height: 30px;
 }
+
+#abmelden_button:before {
+	content: ' (';
+}
+
+#abmelden_button:after {
+	content: ')';
+}
+
+#abmelden_button:hover {
+	color: #CCC;
+}
+
+#nachricht_container input {
+	width: 100%;
+}
+
 #nachrichtenEingabe
 {
 	width: 100%;
@@ -79,7 +108,19 @@ main {
 	min-width: 100%;
 	height: 100px;
 	max-height: 200px;
-	min-height: 50px
+	min-height: 50px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	border: 1px solid #999;
+	padding: 3px;
+}
+
+#gefolgte_container {
+	margin-top: 1em;
+}
+
+#gefolgte_header {
+	font-weight: bold;
 }
 
 #aktions_bereich {
@@ -98,11 +139,11 @@ main {
 }
 
 .nachrichtHeader {
-	padding: 2px;
+	padding: 5px 5px 2px 5px;
 	border-bottom: 1px solid #CCC;
 }
 .nachrichtBody {
-	padding: 2px;
+	padding: 2px 5px 5px 5px;
 }
 
 .benutzerNickname, .nachrichtNickname {
@@ -115,6 +156,10 @@ main {
 	content: ')';
 }
 
+.nachrichtDatum:before {
+	content: ' • ';
+}
+
 @media(min-width: 768px){
 	main {
 		margin-left: calc(50% - 384px);
@@ -124,17 +169,13 @@ main {
 		width: 240px;
 		margin-top: 5px;
 		padding: 5px;
-		position: fixed;
+		float: left;
 	}
 	#haupt_bereich {
-		margin-left: 268px;
+		margin-left: 5px;
 		display: inline-block;
-		width: 490px;
+		width: 495px;
 		padding: 5px;
+		clear: both;
 	}
 }
-
-
-
-
-

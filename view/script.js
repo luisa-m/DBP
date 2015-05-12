@@ -2,6 +2,9 @@
  * 
  */
 function sucheHashtag(hashtag, displayElem){
+	if (hashtag.substring(0,1) == "#"){
+		hashtag = hashtag.substring(1);
+	}
 	var req = new XMLHttpRequest();
 	req.open("GET", "../json.php/hashtag/"+hashtag, true);
 	req.onreadystatechange = function(e){
@@ -62,10 +65,20 @@ function zeigeGefolgte(anzeigeElem){
 }
 
 function formatiereNachrichten(nachrichten){
+	function zwst(x){
+		if (x < 10){
+			return "0" + x;
+		} else {
+			return x;
+		}
+	}
 	var res = "";
 	for (var i=0; i<nachrichten.length; i++){
 		nachricht = nachrichten[i];
-		res += '<div class="nachricht"><div class="nachrichtHeader"><span class="nachrichtName">'+nachricht["benutzer"]["vorname"]+" "+nachricht["benutzer"]["nachname"]+'</span><span class="nachrichtNickname">'+nachricht["benutzer"]["nickname"]+'</span><span class="nachrichtDatum">'+nachricht["datum"]["date"]+'</span></div><div class="nachrichtBody">'+nachricht["inhalt"]+'</div></div>';
+		var datum = new Date(nachricht["datum"]*1000);
+		var monate = new Array("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "Septemer", "Oktober", "November", "Dezember");
+		var datumStr = zwst(datum.getDate()) + ".&nbsp;" + monate[datum.getMonth()] + "&nbsp;" + datum.getFullYear() + " " + zwst(datum.getHours()) + ":" + zwst(datum.getMinutes());
+		res += '<div class="nachricht"><div class="nachrichtHeader"><span class="nachrichtName">'+nachricht["benutzer"]["vorname"]+" "+nachricht["benutzer"]["nachname"]+'</span><span class="nachrichtNickname">'+nachricht["benutzer"]["nickname"]+'</span><span class="nachrichtDatum">'+datumStr+'</span></div><div class="nachrichtBody">'+nachricht["inhalt"]+'</div></div>';
 	}
 	return res;
 }

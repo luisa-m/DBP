@@ -30,7 +30,7 @@ if(isset($_REQUEST["abschicken"]))
 	<nav>
 	<div id="nav_links">
 		<a href='javascript:zeigeTimeline("nachrichten_anzeige");' id="start_button"></a>
-		<input type="text" placeholder="Suchhashtag" id="suchehashtag" onkeyup="sucheingabe(this, event, 'nachrichten_anzeige');">
+		<input type="text" placeholder="Suche nach Hashtag" id="suchehashtag" onkeyup="sucheingabe(this, event, 'nachrichten_anzeige');">
 	</div>
 	<div id="nav_rechts">
 		<span id="benutzername">
@@ -42,11 +42,12 @@ if(isset($_REQUEST["abschicken"]))
 	
 	<main>		
 		<div id="aktions_bereich">
-			<form  action="" method="post">
+			<form  action="" method="post" id="nachricht_container">
 				<textarea id="nachrichtenEingabe" name="nachricht" placeholder="Deine Nachricht"></textarea> <br>
 				<input type="submit" name="abschicken" value="Abschicken">
 			</form>
 			<div id="gefolgte_container">
+				<div id="gefolgte_header">Du folgst:</div>
 				<div id="gefolgte_anzeige">
 				</div>
 				<input type="text" placeholder="Neuer Person folgen" onkeyup="folgenEingabe(this, event, 'gefolgte_anzeige');">
