@@ -9,7 +9,7 @@ require_once("../fach/Nachricht.php");
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 <script type="text/javascript" src="script.js"></script>
-<!-- <link rel="shortcut icon" type="image/x-icon" href="Hahn.jpg"> -->
+<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
 <title>Kikeriki</title>
 </head>
 <body onload='zeigeTimeline("nachrichten_anzeige")';>
