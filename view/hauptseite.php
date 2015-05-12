@@ -24,7 +24,7 @@ if(isset($_REQUEST["abschicken"]))
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 <script type="text/javascript" src="script.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="Icon.png">
-<title>Kikeriki</title>
+<title>Kikeriki!</title>
 </head>
 <body onload='zeigeTimeline("nachrichten_anzeige");zeigeGefolgte("gefolgte_anzeige");'>
 	<nav>

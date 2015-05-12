@@ -30,12 +30,14 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 
 <head>
 	<meta charset="UTF-8">
-	<title>Bitte loggen Sie sich ein</title>
+	<title>Kikeriki! Bitte loggen Sie sich ein</title>
 	<link rel="stylesheet" type="text/css" href="Style.css">
+	<link rel="stylesheet" type="text/css" href="HahnStyle.css">
+	<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
 </head>
 <body>
 <div align=center>
-	<h1>Willkommen bei Twitter 2.0 <Br> Die neusten Updates für dich auf einem Blick</h1>
+	<h1>Willkommen bei Kikeriki! <Br> Die neusten Updates für dich auf einem Blick</h1>
 	<form action="" method="POST">
 	<table class="t1">
 		<tr>
@@ -62,6 +64,9 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 	?>
 </div>
 </body>
+<div id="Logo">
+</div>
+
 </html>
 <?php }?>
 
