@@ -83,7 +83,7 @@ class Benutzer implements JsonSerializable {
 		require_once("Nachricht.php");
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
-		$stmt = $dbh->prepare("SELECT ID FROM nachricht n, folgen f WHERE f.Folgender = :ID AND f.Gefolgter = n.Benutzer");
+		$stmt = $dbh->prepare("SELECT ID FROM nachricht n, folgen f WHERE f.Folgender = :ID AND f.Gefolgter = n.Benutzer ORDER BY Datum DESC");
 		$stmt->bindParam(':ID', htmlentities($this->id));
 		$stmt->execute();
 		$res = $stmt->fetchAll();

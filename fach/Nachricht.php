@@ -60,7 +60,7 @@ class Nachricht implements JsonSerializable {
 	public static function sucheNachHashtag($hashtag){
 		require_once(dirname($_SERVER['SCRIPT_FILENAME']).'/hilf/db_helper.php');
 		$dbh = db_connect();
-		$stmt = $dbh->prepare("SELECT nh.Nachricht FROM nachricht_hashtag nh, Hashtag h WHERE nh.Hashtag = h.ID AND h.Tag = :Tag");
+		$stmt = $dbh->prepare("SELECT nh.Nachricht FROM Nachricht n, nachricht_hashtag nh, Hashtag h WHERE n.ID = nh.Nachricht AND nh.Hashtag = h.ID AND h.Tag = :Tag ORDER BY Datum DESC");
 		$stmt->bindParam(':Tag', $hashtag);
 		if (!$stmt->execute()){
 			print_r($stmt->errorInfo());
@@ -80,7 +80,7 @@ class Nachricht implements JsonSerializable {
 		return [
 				'benutzer' => $this->getBenutzer(),
 				'inhalt' => $this->getInhalt(),
-				'datum' => $this->getDatum()
+				'datum' => $this->getDatum()->getTimestamp()
 		];
 	}
 	
