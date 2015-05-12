@@ -32,6 +32,7 @@ if(!isset($_REQUEST["registrieren"]) || isset($Fehlermeldung))
 	<meta charset="UTF-8">
 	<title>Kikeriki! Bitte registrieren Sie sich</title>
 	<link rel="stylesheet" type="text/css" href="Style.css">
+	<link rel="stylesheet" type="text/css" href="HahnStyle.css">
 	<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
 </head>
 <body>
@@ -68,7 +69,9 @@ if(!isset($_REQUEST["registrieren"]) || isset($Fehlermeldung))
 		echo '<div class="fehlermeldung">' . $Fehlermeldung . '</div>';
 	}
 	?>
-</div>		
+</div>
 </body>
+<div id="Logo">
+</div>
 </html>
 <?php } ?>

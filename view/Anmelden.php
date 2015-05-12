@@ -32,6 +32,7 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 	<meta charset="UTF-8">
 	<title>Kikeriki! Bitte loggen Sie sich ein</title>
 	<link rel="stylesheet" type="text/css" href="Style.css">
+	<link rel="stylesheet" type="text/css" href="HahnStyle.css">
 	<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
 </head>
 <body>
@@ -63,6 +64,9 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 	?>
 </div>
 </body>
+<div id="Logo">
+</div>
+
 </html>
 <?php }?>
 
