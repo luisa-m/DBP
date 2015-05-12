@@ -64,7 +64,7 @@ class Benutzer implements JsonSerializable {
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT Gefolgter FROM Folgen WHERE Folgender = :ID");
-		$stmt->bindParam(':ID', htmlentities($this->id));
+		$stmt->bindParam(':ID', htmlspecialchars($this->id));
 		$stmt->execute();
 		$res = $stmt->fetchAll();
 		$gefolgteBenutzer = array();
@@ -84,7 +84,7 @@ class Benutzer implements JsonSerializable {
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT ID FROM nachricht n, folgen f WHERE f.Folgender = :ID AND f.Gefolgter = n.Benutzer ORDER BY Datum DESC");
-		$stmt->bindParam(':ID', htmlentities($this->id));
+		$stmt->bindParam(':ID', htmlspecialchars($this->id));
 		$stmt->execute();
 		$res = $stmt->fetchAll();
 		$gefolgteNachrichten = array();
@@ -103,8 +103,8 @@ class Benutzer implements JsonSerializable {
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("INSERT INTO nachricht(Benutzer, Inhalt) VALUES(:ID,:Inhalt)");
-		$stmt->bindParam(':ID', htmlentities($this->id));
-		$stmt->bindParam(':Inhalt', htmlentities($inhalt));
+		$stmt->bindParam(':ID', htmlspecialchars($this->id));
+		$stmt->bindParam(':Inhalt', htmlspecialchars($inhalt));
 		$stmt->execute();
 	}
 	
@@ -129,9 +129,9 @@ class Benutzer implements JsonSerializable {
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT Nickname, Vorname, Nachname, Passwort FROM Benutzer WHERE nickname = :ID");
 		$stmt = $dbh->prepare("INSERT INTO benutzer(Nickname ,Vorname, Nachname, Passwort) VALUES(:Nickname,:Vorname,:Nachname,:Passwort)");
-		$stmt->bindParam(':Nickname', htmlentities($nickname));
-		$stmt->bindParam(':Vorname', htmlentities($vorname));
-		$stmt->bindParam(':Nachname', htmlentities($nachname));
+		$stmt->bindParam(':Nickname', htmlspecialchars($nickname));
+		$stmt->bindParam(':Vorname', htmlspecialchars($vorname));
+		$stmt->bindParam(':Nachname', htmlspecialchars($nachname));
 		$stmt->bindParam(':Passwort', (hash("sha256", $passwort)));		
 		$stmt->execute();
 	}
@@ -144,8 +144,8 @@ class Benutzer implements JsonSerializable {
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("INSERT INTO folgen(Folgender, Gefolgter) VALUES(:Folgender,:Gefolgter)");
-		$stmt->bindParam(':Folgender', htmlentities($this->id));
-		$stmt->bindParam(':Gefolgter', htmlentities($nickname));
+		$stmt->bindParam(':Folgender', htmlspecialchars($this->id));
+		$stmt->bindParam(':Gefolgter', htmlspecialchars($nickname));
 		$stmt->execute();
 	}
 	

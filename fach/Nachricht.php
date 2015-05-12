@@ -16,7 +16,7 @@ class Nachricht implements JsonSerializable {
 		require_once("Benutzer.php");
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT Benutzer, Inhalt, Datum FROM Nachricht WHERE ID = :ID");
-		$stmt->bindParam(':ID', htmlentities($id));
+		$stmt->bindParam(':ID', htmlspecialchars($id));
 		$stmt->execute();
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->inhalt = $res["Inhalt"];
@@ -61,7 +61,7 @@ class Nachricht implements JsonSerializable {
 		require_once(dirname($_SERVER['SCRIPT_FILENAME']).'/hilf/db_helper.php');
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT nh.Nachricht FROM Nachricht n, nachricht_hashtag nh, Hashtag h WHERE n.ID = nh.Nachricht AND nh.Hashtag = h.ID AND h.Tag = :Tag ORDER BY Datum DESC");
-		$stmt->bindParam(':Tag', $hashtag);
+		$stmt->bindParam(':Tag', htmlspecialchars($hashtag));
 		if (!$stmt->execute()){
 			print_r($stmt->errorInfo());
 		}
