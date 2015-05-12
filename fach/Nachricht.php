@@ -6,6 +6,11 @@ class Nachricht implements JsonSerializable {
 	private $inhalt;
 	private $datum;
 	
+	/**
+	 * Erzeugt ein neues Objekt vom Typ Nachricht.
+	 * @param String $id
+	 * @param Benutzer $benutzer
+	 */
 	public function __construct($id, $benutzer = null){
 		require_once("/../hilf/db_helper.php");
 		require_once("Benutzer.php");
@@ -23,18 +28,35 @@ class Nachricht implements JsonSerializable {
 		$this->datum = new DateTime($res["Datum"]);
 	} 
 	
+	/**
+	 * Liefert den Inhalt einer Nachricht.
+	 * @return String inhalt
+	 */
 	public function getInhalt(){
 		return $this->inhalt;
 	}
 	
+	/**
+	 * Liefert den jeweiligen Benutzer zu einer Nachricht.
+	 * @return Benutzer benutzer
+	 */
 	public function getBenutzer(){
 		return $this->benutzer;
 	}
 	
+	/**
+	 * Liefert Datum und Zeit zu einer jeweiligen Nachricht.
+	 * @return DateTime
+	 */
 	public function getDatum(){
 		return $this->datum;
 	}
 	
+	/**
+	 * Liefert alle Nachrichten zu einem eingegebenen Hashtag.
+	 * @param String $hashtag
+	 * @return Array von Strings
+	 */
 	public static function sucheNachHashtag($hashtag){
 		require_once(dirname($_SERVER['SCRIPT_FILENAME']).'/hilf/db_helper.php');
 		$dbh = db_connect();
@@ -50,6 +72,10 @@ class Nachricht implements JsonSerializable {
 		return $result;
 	}
 	
+	/**
+	 * Daten, die in JSON serialisiert werden sollen.
+	 * @return Array 
+	 */
 	public function jsonSerialize() {
 		return [
 				'benutzer' => $this->getBenutzer(),

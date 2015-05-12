@@ -3,7 +3,10 @@ class Benutzer implements JsonSerializable {
 	
 	private $id;
 	
-	
+	/**
+	 * Erzeugt ein neues Objekt vom Typ Benutzer.
+	 * @param String $id
+	 */
 	public function __construct($id){
 		$this->id = $id;
 		
@@ -145,6 +148,10 @@ class Benutzer implements JsonSerializable {
 		$stmt->execute();
 	}
 	
+	/**
+	 * Daten, die in JSON serialisiert werden sollen.
+	 * @return Array von Strings
+	 */
 	public function jsonSerialize(){
 		return [
 			'nickname' => $this->getNickname(),
