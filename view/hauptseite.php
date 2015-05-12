@@ -3,6 +3,9 @@ require_once("../fach/Kontext.php");
 require_once("../fach/Benutzer.php");
 require_once("../fach/Nachricht.php");
 $kontext = new Kontext();
+if (!$kontext->isAngemeldet()){
+	header("Location:Anmelden.php");
+}
 if(isset($_REQUEST["abschicken"]))
 {
 	$benutzer = $kontext->getBenutzer();

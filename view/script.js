@@ -1,3 +1,4 @@
+var mach_nochmal = null;
 /**
  * 
  */
@@ -13,6 +14,14 @@ function sucheHashtag(hashtag, displayElem){
 		}
 	};
 	req.send();	
+	wiederhole(function(){sucheHashtag(hashtag, displayElem)});
+}
+
+function wiederhole(funktion){
+	if (mach_nochmal != null){
+		clearInterval(mach_nochmal);
+	}
+	mach_nochmal = setInterval(funktion, 60000);
 }
 
 function sucheingabe(self, e, displayElem){
@@ -30,15 +39,16 @@ function folgeBenutzer(benutzername, folgenElem) {
 			console.log(req.responseText);
 			if (req.responseText == "+ok") {
 				zeigeGefolgte(folgenElem);
+				zeigeTimeline(nachrichtenElem);
 			}
 		}
 	};
 	req.send();			
 }
 
-function folgenEingabe(self, e, folgenElem) {
+function folgenEingabe(self, e, folgenElem, nachrichtenElem) {
 	if (e.keyCode == 13) {
-		folgeBenutzer(self.value, folgenElem)
+		folgeBenutzer(self.value, folgenElem, nachrichtenElem)
 	}
 }
 
@@ -50,7 +60,8 @@ function zeigeTimeline(displayElem){
 			document.getElementById(displayElem).innerHTML = formatiereNachrichten(JSON.parse(req.responseText));
 		}
 	};
-	req.send();		
+	req.send();	
+	wiederhole(function(){zeigeTimeline(displayElem)});
 }
 
 function zeigeGefolgte(anzeigeElem){

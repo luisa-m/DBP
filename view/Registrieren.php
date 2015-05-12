@@ -1,15 +1,17 @@
 ﻿<?php 
 require_once('../fach/Benutzer.php');
+require_once('../fach/Kontext.php');
 
 
 if(isset($_REQUEST["registrieren"]))
 {
-	$benutzer = new Benutzer($_REQUEST["nickname"]);
 	if(strcmp($_POST["password1"],$_POST["password2"]) == 0)
 	{
 		try
 		{
-			$benutzer->registrieren($_REQUEST["nickname"],$_REQUEST["vorname"],$_REQUEST["nachname"],$_REQUEST["password1"]);
+			Benutzer::registrieren($_REQUEST["nickname"],$_REQUEST["vorname"],$_REQUEST["nachname"],$_REQUEST["password1"]);
+			$kontext = new Kontext();
+			$kontext->einloggen($_REQUEST["nickname"], $_REQUEST["password1"]);
 			header("location:Hauptseite.php");
 		}
 		catch(Exception $e)

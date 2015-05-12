@@ -125,6 +125,7 @@ class Benutzer implements JsonSerializable {
 	 * @param String $passwort Passwort des neuen Benutzers
 	 */
 	public static function registrieren($nickname,$vorname,$nachname,$passwort){
+		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
 		$stmt = $dbh->prepare("SELECT Nickname, Vorname, Nachname, Passwort FROM Benutzer WHERE nickname = :ID");
 		$stmt = $dbh->prepare("INSERT INTO benutzer(Nickname ,Vorname, Nachname, Passwort) VALUES(:Nickname,:Vorname,:Nachname,:Passwort)");
