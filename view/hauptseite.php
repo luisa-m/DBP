@@ -2,6 +2,23 @@
 require_once("../fach/Kontext.php");
 require_once("../fach/Benutzer.php");
 require_once("../fach/Nachricht.php");
+
+if(isset($_REQUEST["abschicken"]))
+{
+	$benutzer = (new Kontext())->getBenutzer();
+		try
+		{
+			$benutzer->schreibeNachricht($_REQUEST["nachricht"]);
+			header("location:Hauptseite.php");
+		}
+		catch(Exception $e)
+		{
+			$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e.getMessage() . ")";
+		}
+}
+
+if(!isset($_REQUEST["abschicken"]) || isset($Fehlermeldung))
+{
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,11 +47,17 @@ require_once("../fach/Nachricht.php");
 		<table id="table">
 			<tbody>
 				<tr>
+				 <form  action="" method="post">
 					<td id="aktions_bereich">
-						<textarea id="nachricht" placeholder="Ihre Nachricht"></textarea> <br>
-						<button>Abschicken</button>
+						<textarea id="nachrichtenEingabe" name="nachricht" placeholder="Ihre Nachricht"></textarea> <br>
+						<input type="submit" name="abschicken" value="Abschicken">
 						<p>evtl. Wolke</p>
 					</td>
+					</form>
+					<?php 
+					if(isset($Fehlermeldung)){
+					echo '<div class="fehlermeldung">' . $Fehlermeldung . '</div>';}
+					?>
 					<td id="nachrichten_anzeige">
 						<p>Nachricht 1</p>
 						<p>Nachricht 2</p>
@@ -46,3 +69,4 @@ require_once("../fach/Nachricht.php");
 	</main>
 </body>
 </html>
+<?php }?>
