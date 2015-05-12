@@ -30,12 +30,13 @@ if(!isset($_REQUEST["registrieren"]) || isset($Fehlermeldung))
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Bitte registrieren Sie sich</title>
+	<title>Kikeriki! Bitte registrieren Sie sich</title>
 	<link rel="stylesheet" type="text/css" href="Style.css">
+	<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
 </head>
 <body>
 <div align=center>
-	<h1>Willkommen bei Twitter 2.0 <Br> Registriere dich jetzt und bleibe in Verbindung</h1>
+	<h1>Willkommen bei Kikeriki! <Br> Registriere dich jetzt und bleibe in Verbindung</h1>
 	<form  action="" method="post">
 	<table class="t1">
 		<tr>
