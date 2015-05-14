@@ -33,13 +33,12 @@ if(!isset($_REQUEST["registrieren"]) || isset($Fehlermeldung))
 <head>
 	<meta charset="UTF-8">
 	<title>Kikeriki! Bitte registrieren Sie sich</title>
-	<link rel="stylesheet" type="text/css" href="Style.css">
-	<link rel="stylesheet" type="text/css" href="HahnStyle.css">
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
 </head>
-<body>
+<body class="logo">
 <div align=center>
-	<h1>Willkommen bei Kikeriki! <Br> Registriere dich jetzt und bleibe in Verbindung</h1>
+	<h1 class="white">Willkommen bei Kikeriki! <Br> Registriere dich jetzt und bleibe in Verbindung</h1>
 	<form  action="" method="post">
 	<table class="t1">
 		<tr>
@@ -73,7 +72,5 @@ if(!isset($_REQUEST["registrieren"]) || isset($Fehlermeldung))
 	?>
 </div>
 </body>
-<div id="Logo">
-</div>
 </html>
 <?php } ?>

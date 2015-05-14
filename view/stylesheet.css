@@ -187,3 +187,34 @@ a.hashtag.highlighted {
 		clear: both;
 	}
 }
+
+.t1
+{
+	color:white;
+}
+.fehlermeldung
+{
+	color: white;>
+}
+
+html {
+	min-height: 100%;
+}
+body.logo {
+	background-image: url(Logo.png);
+	background-size: auto 300px;
+	background-repeat: no-repeat;
+	background-position: bottom 5% right 5%;
+	min-height: 100%;
+}
+
+.white {
+	color: #FFF;
+}
+
+.t1 input[type=text], .t1 input[type=password]
+	{width: 350px}
+
+.t1 input[type=submit] {
+	width: 70pt; margin: 2pt; background-color: white
+}

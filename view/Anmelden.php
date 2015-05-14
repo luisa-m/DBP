@@ -31,18 +31,17 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 <head>
 	<meta charset="UTF-8">
 	<title>Kikeriki! Bitte loggen Sie sich ein</title>
-	<link rel="stylesheet" type="text/css" href="Style.css">
-	<link rel="stylesheet" type="text/css" href="HahnStyle.css">
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
 </head>
-<body>
+<body class="logo">
 <div align=center>
-	<h1>Willkommen bei Kikeriki! <Br> Die neusten Updates für dich auf einem Blick</h1>
+	<h1 class="white">Willkommen bei Kikeriki! <Br> Die neusten Updates für dich auf einem Blick</h1>
 	<form action="" method="POST">
 	<table class="t1">
 		<tr>
 				<td>Nickname</td>
-				<td><input required type="text" name="nickname" placeholder="Nickname" value="<?php if(!empty($_POST["nickname"])){echo $_POST["nickname"];}?>"/></td>
+				<td><input required type="text" name="nickname" placeholder="Nickname" value="<?php if(!empty($_REQUEST["nickname"])){echo $_REQUEST["nickname"];}?>"/></td>
 		</tr>
 		<tr>
 				<td>Passwort</td>
@@ -64,8 +63,6 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 	?>
 </div>
 </body>
-<div id="Logo">
-</div>
 
 </html>
 <?php }?>
