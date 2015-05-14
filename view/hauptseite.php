@@ -24,6 +24,7 @@ if(isset($_REQUEST["abschicken"]))
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 <script type="text/javascript" src="script.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="Icon.png">
@@ -33,7 +34,7 @@ if(isset($_REQUEST["abschicken"]))
 	<nav>
 	<div id="nav_links">
 		<a href='javascript:zeigeTimeline("nachrichten_anzeige");' id="start_button"></a>
-		<input type="text" placeholder="Suche nach Hashtag" id="suchehashtag" onkeyup="sucheingabe(this, event, 'nachrichten_anzeige');">
+		<input type="search" placeholder="Suche nach Hashtag" id="suchehashtag" onkeyup="sucheingabe(this, event, 'nachrichten_anzeige');">
 	</div>
 	<div id="nav_rechts">
 		<span id="benutzername">

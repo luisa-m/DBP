@@ -26,7 +26,9 @@ function wiederhole(funktion){
 
 function sucheingabe(self, e, displayElem){
 	if (e.keyCode == 13){
-		sucheHashtag(self.value, displayElem)
+		sucheHashtag(self.value, displayElem);
+		self.value = "";
+		self.blur();
 	}
 }
 
@@ -48,7 +50,9 @@ function folgeBenutzer(benutzername, folgenElem) {
 
 function folgenEingabe(self, e, folgenElem, nachrichtenElem) {
 	if (e.keyCode == 13) {
-		folgeBenutzer(self.value, folgenElem, nachrichtenElem)
+		folgeBenutzer(self.value, folgenElem, nachrichtenElem);
+		self.value = "";
+		self.blur();
 	}
 }
 

@@ -1,22 +1,57 @@
 @charset "UTF-8";
 
-/* html & body style */
+/* Browser-Standardabstände entfernen */
 p, div, main, nav, span, table, tr, td {
 	padding: 0px;
 	margin: 0px;
 }
 
+/* Allgemeiner Stil */
+html {
+	min-height: 100%;
+}
+
 body {
 	background-color: #FF463E;
 	font-family: Arial, Verdana, sans-serif;
-	padding-bottom: 30px;
-	padding-top: 0px;
 }
 
 textarea {
 	font-family: inherited;
 }
 
+.white {
+	color: #FFF;
+}
+
+/* Spezielle Elemente auf Anmelden- und Registrieren-Seite */
+.t1
+{
+	color:white;
+}
+.fehlermeldung
+{
+	color: white;>
+}
+
+body.logo {
+	background-image: url(Logo.png);
+	background-size: auto 300px;
+	background-repeat: no-repeat;
+	background-position: bottom 5% right 5%;
+	min-height: 100%;
+}
+
+.t1 input[type=text], .t1 input[type=password]
+	{
+	width: 350px;
+	}
+
+.t1 input[type=submit] {
+	width: 70pt; margin: 2pt; background-color: white
+}
+
+/* Navigationsleiste */
 nav {
 	position: fixed;
 	top: 0px;
@@ -32,10 +67,6 @@ nav {
 
 nav * {
 	color: #FFF;
-}
-
-main {
-	margin-top:40px;
 }
 
 #nav_links
@@ -97,6 +128,16 @@ main {
 	color: #CCC;
 }
 
+main {
+	margin-top:40px;
+}
+
+
+/* Aktions-Bereich */
+#aktions_bereich {
+	padding: 5px;
+}
+
 #nachricht_container input {
 	width: 100%;
 }
@@ -128,22 +169,13 @@ main {
 	border-radius: 10px;
 }
 
-#haupt_bereich {
 
-}
+/* Formatierung von Nachrichten */
 
 .nachricht {
 	background-color: #FFF;
 	border-radius: 10px;
 	margin-bottom: 2px;
-}
-
-a.hashtag {
-	color: #E8567B;
-	text-decoration: none;
-}
-a.hashtag.highlighted {
-	font-weight: bold;	
 }
 
 .nachrichtHeader {
@@ -152,6 +184,14 @@ a.hashtag.highlighted {
 }
 .nachrichtBody {
 	padding: 2px 5px 5px 5px;
+}
+
+a.hashtag {
+	color: #E8567B;
+	text-decoration: none;
+}
+a.hashtag.highlighted {
+	font-weight: bold;	
 }
 
 .benutzerNickname, .nachrichtNickname {
@@ -168,6 +208,8 @@ a.hashtag.highlighted {
 	content: ' • ';
 }
 
+
+/* Spezielle Anpassungen für große Bildschirme */
 @media(min-width: 768px){
 	main {
 		margin-left: calc(50% - 384px);
@@ -176,7 +218,6 @@ a.hashtag.highlighted {
 		display: inline-block;
 		width: 240px;
 		margin-top: 5px;
-		padding: 5px;
 		float: left;
 	}
 	#haupt_bereich {
@@ -188,33 +229,20 @@ a.hashtag.highlighted {
 	}
 }
 
-.t1
-{
-	color:white;
-}
-.fehlermeldung
-{
-	color: white;>
-}
-
-html {
-	min-height: 100%;
-}
-body.logo {
-	background-image: url(Logo.png);
-	background-size: auto 300px;
-	background-repeat: no-repeat;
-	background-position: bottom 5% right 5%;
-	min-height: 100%;
+/* Spezielle Anpassungen für kleine Bildschirme */
+@media (max-width: 767.99px){
+	main {
+		margin-top:45px;
+	}
+	
+	#aktions_bereich {
+		margin-bottom: 5px;
+	}
 }
 
-.white {
-	color: #FFF;
-}
-
-.t1 input[type=text], .t1 input[type=password]
-	{width: 350px}
-
-.t1 input[type=submit] {
-	width: 70pt; margin: 2pt; background-color: white
+@media (max-width: 500px){
+	.t1 input[type=text], .t1 input[type=password]
+	{
+	width: auto;
+	}
 }

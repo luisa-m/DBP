@@ -32,6 +32,7 @@ if(!isset($_REQUEST["registrieren"]) || isset($Fehlermeldung))
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Kikeriki! Bitte registrieren Sie sich</title>
 	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
