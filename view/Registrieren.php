@@ -2,7 +2,7 @@
 require_once('../fach/Benutzer.php');
 require_once('../fach/Kontext.php');
 
-
+// Wenn Formular abgesendet, versuchen, zu registrieren
 if(isset($_REQUEST["registrieren"]))
 {
 	if(strcmp($_POST["password1"],$_POST["password2"]) == 0)
@@ -24,6 +24,8 @@ if(isset($_REQUEST["registrieren"]))
 	}
 }
 
+
+// Wenn kein Registrierversuch gestartet oder Registrierung fehlgeschlagen: Formular anzeigen
 if(!isset($_REQUEST["registrieren"]) || isset($Fehlermeldung))
 {
 	?>

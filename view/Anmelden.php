@@ -2,12 +2,13 @@
 require_once('../fach/Kontext.php');
 $kontext = new Kontext();
 
+// Wenn Formular abgesendet, versuchen einzuloggen
 if(isset($_REQUEST["einloggen"]))
 {
 	try 
 	{
 		$kontext->einloggen($_REQUEST["nickname"], $_REQUEST["password"]);
-		header("location:Hauptseite.php");
+		header("location:hauptseite.php");
 	}
 	catch(Exception $e)
 	{
@@ -20,7 +21,17 @@ if(isset($_REQUEST["einloggen"]))
 			$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e.getMessage() . ")";
 		}
 	}
+	
+// Auf Anforderung ausloggen
+} elseif (isset($_REQUEST["abmelden"]) && $_REQUEST["abmelden"] == 1){
+	$kontext->ausloggen();
+	
+// Wenn bereits eingeloggt, auf Hauptseite weiterleiten
+} elseif ($kontext->isAngemeldet()){
+	header("location:hauptseite.php");
 }
+
+// Wenn kein Einlog-Versuch gestartet oder Einloggen fehlgeschlagen: Formular anzeigen
 if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 {
 	?>

@@ -40,7 +40,7 @@ if(isset($_REQUEST["abschicken"]))
 		<span id="benutzername">
 			<?php echo $kontext->getBenutzer()->getNickname() ?>
 		</span>
-		<a href="Anmelden.php" id="abmelden_button">Abmelden</a>
+		<a href="Anmelden.php?abmelden=1" id="abmelden_button">Abmelden</a>
 	</div>
 	</nav>
 	
