@@ -9,7 +9,7 @@ class Nachricht implements JsonSerializable {
 	/**
 	 * Erzeugt ein neues Objekt vom Typ Nachricht.
 	 * @param String $id
-	 * @param Benutzer $benutzer
+	 * @param Benutzer $benutzer Wenn kein Benutzer-Objekt angegeben wird, wird ein passendes Benutzer-Objekt erzeugt
 	 */
 	public function __construct($id, $benutzer = null){
 		require_once("/../hilf/db_helper.php");
