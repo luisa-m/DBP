@@ -3,9 +3,13 @@ require_once("../fach/Kontext.php");
 require_once("../fach/Benutzer.php");
 require_once("../fach/Nachricht.php");
 $kontext = new Kontext();
+
+// Nicht angemeldete Nutzer auf die Anmeldeseite weiterleiten
 if (!$kontext->isAngemeldet()){
 	header("Location:Anmelden.php");
 }
+
+// Versuchen, Eintrag zu verfassen
 if(isset($_REQUEST["abschicken"]))
 {
 	$benutzer = $kontext->getBenutzer();
@@ -19,6 +23,8 @@ if(isset($_REQUEST["abschicken"]))
 		}
 }
 
+
+// Webseite anzeigen
 ?>
 <!DOCTYPE html>
 <html>
