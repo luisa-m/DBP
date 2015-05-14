@@ -10,7 +10,7 @@ function sucheHashtag(hashtag, displayElem){
 	req.open("GET", "../json.php/hashtag/"+hashtag, true);
 	req.onreadystatechange = function(e){
 		if (req.readyState == 4){
-			document.getElementById(displayElem).innerHTML = formatiereNachrichten(JSON.parse(req.responseText));
+			document.getElementById(displayElem).innerHTML = formatiereNachrichten(JSON.parse(req.responseText), displayElem, hashtag);
 		}
 	};
 	req.send();	
@@ -57,7 +57,7 @@ function zeigeTimeline(displayElem){
 	req.open("GET", "../json.php/gefolgt/nachrichten", true);
 	req.onreadystatechange = function(e){
 		if (req.readyState == 4){
-			document.getElementById(displayElem).innerHTML = formatiereNachrichten(JSON.parse(req.responseText));
+			document.getElementById(displayElem).innerHTML = formatiereNachrichten(JSON.parse(req.responseText), displayElem, "");
 		}
 	};
 	req.send();	
@@ -75,7 +75,7 @@ function zeigeGefolgte(anzeigeElem){
 	req.send();		
 }
 
-function formatiereNachrichten(nachrichten){
+function formatiereNachrichten(nachrichten, displayElem, highlightedHashtag){
 	function zwst(x){
 		if (x < 10){
 			return "0" + x;
@@ -89,7 +89,20 @@ function formatiereNachrichten(nachrichten){
 		var datum = new Date(nachricht["datum"]*1000);
 		var monate = new Array("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "Septemer", "Oktober", "November", "Dezember");
 		var datumStr = zwst(datum.getDate()) + ".&nbsp;" + monate[datum.getMonth()] + "&nbsp;" + datum.getFullYear() + " " + zwst(datum.getHours()) + ":" + zwst(datum.getMinutes());
-		res += '<div class="nachricht"><div class="nachrichtHeader"><span class="nachrichtName">'+nachricht["benutzer"]["vorname"]+" "+nachricht["benutzer"]["nachname"]+'</span><span class="nachrichtNickname">'+nachricht["benutzer"]["nickname"]+'</span><span class="nachrichtDatum">'+datumStr+'</span></div><div class="nachrichtBody">'+nachricht["inhalt"]+'</div></div>';
+		
+		var len = nachricht["inhalt"].length;
+		var regEx = /\#([^\s\.\,]*)/g;
+		var find;
+		var inhalt = "";
+		var lastFindEnd = 0;
+		while (find = regEx.exec(nachricht["inhalt"])){
+			inhalt += nachricht["inhalt"].substr(lastFindEnd, find.index - lastFindEnd);
+			inhalt += '<a class="hashtag' + (find[1] == highlightedHashtag ? " highlighted" : "") + '" href="javascript:sucheHashtag(\''+find[0]+'\', \''+displayElem+'\');\">'+find[0]+'</a>';
+			lastFindEnd = find.index + find[0].length;
+		}
+		inhalt += nachricht["inhalt"].substr(lastFindEnd);
+		//var inhalt = nachricht["inhalt"].replace(/\#([^\s\.\,]*)/g, "<a class=\"hashtag\" href=\"javascript:sucheHashtag('$1', '"+displayElem+"');\">#$1</a>");
+		res += '<div class="nachricht"><div class="nachrichtHeader"><span class="nachrichtName">'+nachricht["benutzer"]["vorname"]+" "+nachricht["benutzer"]["nachname"]+'</span><span class="nachrichtNickname">'+nachricht["benutzer"]["nickname"]+'</span><span class="nachrichtDatum">'+datumStr+'</span></div><div class="nachrichtBody">'+inhalt+'</div></div>';
 	}
 	return res;
 }

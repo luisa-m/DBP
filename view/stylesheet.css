@@ -138,6 +138,14 @@ main {
 	margin-bottom: 2px;
 }
 
+a.hashtag {
+	color: #E8567B;
+	text-decoration: none;
+}
+a.hashtag.highlighted {
+	font-weight: bold;	
+}
+
 .nachrichtHeader {
 	padding: 5px 5px 2px 5px;
 	border-bottom: 1px solid #CCC;
