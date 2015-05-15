@@ -135,18 +135,18 @@ function formatiereNachrichten(nachrichten, displayElem, highlightedHashtag){
 		
 		// Datum für die Anzeige aufbereiten
 		var datum = new Date(nachricht["datum"]*1000);
-		var monate = new Array("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "Septemer", "Oktober", "November", "Dezember");
+		var monate = new Array("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember");
 		var datumStr = zwst(datum.getDate()) + ".&nbsp;" + monate[datum.getMonth()] + "&nbsp;" + datum.getFullYear() + " " + zwst(datum.getHours()) + ":" + zwst(datum.getMinutes());
 		
 		// Nachrichten-Inhalt für die Anzeige aufbereiten
 		var len = nachricht["inhalt"].length;
-		var regEx = /\#([^\s\.\,\:\;\-\+\#\?\!]*)/g;
+		var regEx = /\#([^\s\.\,\:\;\-\+\#\?\!\"\§\$\%\/\(\)\=\\\´\`\@\€\µ\'\~\*\<\>\|\²\³\{\[\]\}]*)/g;
 		var find;
 		var inhalt = "";
 		var lastFindEnd = 0;
 		while (find = regEx.exec(nachricht["inhalt"])){
 			inhalt += nachricht["inhalt"].substr(lastFindEnd, find.index - lastFindEnd); // Inhalt zwischen den Hashtags anzeigen (beim ersten Hashtag: Inhalt vor dem ersten Hashtag)
-			inhalt += '<a class="hashtag' + (find[1] == highlightedHashtag ? " highlighted" : "") + '" href="javascript:sucheHashtag(\''+find[0]+'\', \''+displayElem+'\');\">'+find[0]+'</a>'; // Hashtag verlinkt anzeigen
+			inhalt += '<a class="hashtag' + (find[1].toUpperCase() == highlightedHashtag.toUpperCase() ? " highlighted" : "") + '" href="javascript:sucheHashtag(\''+find[0]+'\', \''+displayElem+'\');\">'+find[0]+'</a>'; // Hashtag verlinkt anzeigen
 			lastFindEnd = find.index + find[0].length;
 		}
 		inhalt += nachricht["inhalt"].substr(lastFindEnd); // Inhalt nach dem letzten Hashtag anzeigen
