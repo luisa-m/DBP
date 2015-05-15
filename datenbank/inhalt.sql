@@ -44,7 +44,7 @@ INSERT INTO `folgen` (`Folgender`, `Gefolgter`) VALUES
 ('koelnziege', 'lars'),
 ('luisa', 'lars'),
 ('koelnziege', 'luisa'),
-('lars', 'luisa');
+('lars', 'luisa'),
 ('Testuser', 'koelnziege');
 
 --

@@ -140,7 +140,7 @@ function formatiereNachrichten(nachrichten, displayElem, highlightedHashtag){
 		
 		// Nachrichten-Inhalt für die Anzeige aufbereiten
 		var len = nachricht["inhalt"].length;
-		var regEx = /\#([^\s\.\,]*)/g;
+		var regEx = /\#([^\s\.\,\:\;\-\+]*)/g;
 		var find;
 		var inhalt = "";
 		var lastFindEnd = 0;

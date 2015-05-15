@@ -89,7 +89,9 @@ WHILE @REST LIKE '%#%' DO
       INSERT INTO hashtag(Tag) VALUES(@TAG);    
     END IF;
     SET @ID = (SELECT ID FROM hashtag WHERE Tag = @TAG);  
-    INSERT INTO nachricht_hashtag(Nachricht, Hashtag) VALUES(NEW.ID, @ID);
+	IF NOT EXISTS(SELECT Nachricht FROM nachricht_hashtag WHERE Hashtag = @ID AND Nachricht = NEW.ID) THEN
+    	INSERT INTO nachricht_hashtag(Nachricht, Hashtag) VALUES(NEW.ID, @ID);
+    END IF;
 END WHILE;
 END
 //

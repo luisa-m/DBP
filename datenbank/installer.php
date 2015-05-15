@@ -7,9 +7,9 @@
 
 <?php
 if (isset($_REQUEST["inhalt"])){
-	$erfolg = fuehreSQLDateiAus('struktur.sql');
-	if ($erfolg && $_REQUEST["inhalt"] == 1){
-		$erfolg = fuehreSQLDateiAus('inhalt.sql');
+	$erfolg = fuehreSQLDateiAus('struktur.sql', false);
+	if ($_REQUEST["inhalt"] == 1){
+		$erfolg = fuehreSQLDateiAus('inhalt.sql', true);
 	}
 	if ($erfolg){
 		echo '<p>Die Installation wurde erfolgreich durchgeführt</p>';
@@ -26,33 +26,24 @@ if (isset($_REQUEST["inhalt"])){
 }
 
 // Ermöglicht die Ausführung von SQL-Dateien mit Delimiter-Wechsel
-function fuehreSQLDateiAus($path){
+function fuehreSQLDateiAus($path, $selectDatabase){
 	$result = true;
 	require_once '../hilf/db_helper.php';
-	$dbh = db_connect_wo_database();	
+	if ($selectDatabase) $dbh = db_connect();
+	else $dbh = db_connect_wo_database();	
 	$file = file_get_contents($path);
 	$delim = ';';
 	preg_match_all('/DELIMITER (.*)(\s|$)/', $file, $matches, PREG_OFFSET_CAPTURE);
-	$delimChanges = count($matches[0]);
-	$i = 0;
-	$offset = 0;
-	while (!preg_match('/^\s*$/', $file)){
-		$posDelim = strpos($file, $delim);
-		if ($posDelim === false){
-			$posDelim = strlen($file)+1;
-		}
-		if ($i < $delimChanges && $matches[0][$i][1] < $posDelim+$offset){
-			$delim = $matches[1][$i][0];
-			$file = substr($file, $matches[2][$i][1]-$offset);
-			$offset = $matches[2][$i][1];
-			$i++;
-		} else {
-			$query = substr($file, 0, $posDelim);
-			$file = substr($file, $posDelim+strlen($delim));
-			$offset += $posDelim+strlen($delim);
-			if (!$dbh->exec($query)){
-				echo '<p>'.$dbh->errorInfo()[2].'</p>';
+	for ($i=0;$i<=sizeof($matches[0]);$i++){
+		$begin = ($i == 0 ? 0 : $matches[1][$i-1][1]+strlen($matches[1][$i-1][0]));
+		$end = ($i == sizeof($matches[0]) ? false : $matches[0][$i][1]-strlen($matches[1][$i-1][0])-1);
+		if (!$end) $query = substr($file, $begin);
+		else $query = substr($file, $begin, $end-$begin);
+		if (!$dbh->exec($query)){
+			$errInfo = $dbh->errorInfo();
+			if ($errInfo[0] != "00000"){
 				$result = false;
+				echo '<p>Die Abfrage</p><p>'.$query.'</p><p>führte zu einem Fehler: '.$errInfo[2].'(SQLSTATE Error Code: '.$errInfo[0].', Driver Error Code: '.$errInfo[1].')</p>';
 			}
 		}
 	}
