@@ -60,7 +60,7 @@ if(isset($_REQUEST["abschicken"]))
 				<div id="gefolgte_header">Du folgst:</div>
 				<div id="gefolgte_anzeige">
 				</div>
-				<input type="text" placeholder="Neuer Person folgen" onkeyup="folgenEingabe(this, event, 'gefolgte_anzeige');">
+				<input type="text" placeholder="Neuer Person folgen" onkeyup="folgenEingabe(this, event, 'gefolgte_anzeige', 'nachrichten_anzeige');">
 			</div>
 		</div>
 		<div id="haupt_bereich">
