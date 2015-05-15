@@ -16,7 +16,7 @@ if(isset($_REQUEST["registrieren"]))
 		}
 		catch(Exception $e)
 		{
-			$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e.getMessage() . ")";
+			$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e->getMessage() . ")";
 		}
 	}
 	else {

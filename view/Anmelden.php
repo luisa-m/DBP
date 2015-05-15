@@ -18,7 +18,7 @@ if(isset($_REQUEST["einloggen"]))
 		}
 		else
 		{
-			$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e.getMessage() . ")";
+			$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e->getMessage() . ")";
 		}
 	}
 	
@@ -48,7 +48,7 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 </head>
 <body class="logo">
 <div align=center>
-	<h1 class="white">Willkommen bei Kikeriki! <Br> Die neusten Updates für dich auf einem Blick</h1>
+	<h1 class="white">Willkommen bei Kikeriki! <Br> Die neusten Updates für dich auf einen Blick!</h1>
 	<form action="" method="POST">
 	<table class="t1">
 		<tr>
