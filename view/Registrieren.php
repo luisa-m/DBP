@@ -16,7 +16,14 @@ if(isset($_REQUEST["registrieren"]))
 		}
 		catch(Exception $e)
 		{
-			$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e->getMessage() . ")";
+			if($e->getMessage() == "NicknameBereitsVorhanden")
+			{
+				$Fehlermeldung = "Der Nickname ist bereits vergeben. Bitte wähle einen anderen Nicknamen.";
+			}
+			else 
+			{
+				$Fehlermeldung = "Es ist ein unerwarteter Fehler aufgetreten (" . $e->getMessage() . ")";
+			}
 		}
 	}
 	else {

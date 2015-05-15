@@ -133,7 +133,11 @@ class Benutzer implements JsonSerializable {
 		$stmt->bindParam(':Vorname', htmlspecialchars($vorname));
 		$stmt->bindParam(':Nachname', htmlspecialchars($nachname));
 		$stmt->bindParam(':Passwort', (hash("sha256", $passwort)));		
-		$stmt->execute();
+		
+		if($stmt->execute() == false)
+		{
+			throw new Exception("NicknameBereitsVorhanden");
+		}
 	}
 	
 	/**
