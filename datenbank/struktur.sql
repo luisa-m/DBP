@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 06. Mai 2015 um 15:13
+-- Erstellungszeit: 15. Mai 2015 um 11:40
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `folgen` (
 CREATE TABLE IF NOT EXISTS `hashtag` (
 `ID` int(11) NOT NULL,
   `Tag` varchar(40) COLLATE utf8_german2_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `nachricht` (
   `Benutzer` varchar(40) COLLATE utf8_german2_ci NOT NULL,
   `Inhalt` text COLLATE utf8_german2_ci NOT NULL,
   `Datum` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8 COLLATE=utf8_german2_ci;
 
 --
 -- Trigger `nachricht`
@@ -79,8 +79,11 @@ CREATE TRIGGER `nachricht_insert_hashtag` AFTER INSERT ON `nachricht`
 SET @REST = NEW.Inhalt;
 WHILE @REST LIKE '%#%' DO
 	SET @STARTPOS = LOCATE('#', @REST);
-    SET @ENDPOS = LOCATE(' ', @REST, @STARTPOS);
-    SET @TAG = IF(@ENDPOS>0,SUBSTRING(@REST, @STARTPOS+1, @ENDPOS-@STARTPOS),SUBSTRING(@REST, @STARTPOS+1));
+    SET @ENDPOS = @STARTPOS + 1;
+    WHILE(@ENDPOS <= CHAR_LENGTH(@REST) AND SUBSTRING(@REST, @ENDPOS, 1) REGEXP '[[:alnum:]]') DO
+        SET @ENDPOS = @ENDPOS + 1;    
+    END WHILE;   
+    SET @TAG = SUBSTRING(@REST, @STARTPOS+1, @ENDPOS-@STARTPOS-1);
     SET @REST = SUBSTRING(@REST, @ENDPOS);
     IF NOT EXISTS(SELECT ID FROM hashtag WHERE Tag = @TAG) THEN
       INSERT INTO hashtag(Tag) VALUES(@TAG);    
@@ -145,12 +148,12 @@ ALTER TABLE `nachricht_hashtag`
 -- AUTO_INCREMENT für Tabelle `hashtag`
 --
 ALTER TABLE `hashtag`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=78;
 --
 -- AUTO_INCREMENT für Tabelle `nachricht`
 --
 ALTER TABLE `nachricht`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=84;
 --
 -- Constraints der exportierten Tabellen
 --
