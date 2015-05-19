@@ -55,7 +55,7 @@ function fuehreSQLDateiAus($path, $selectDatabase){
 	preg_match_all('/DELIMITER (.*)(\s|$)/', $file, $matches, PREG_OFFSET_CAPTURE);
 	for ($i=0;$i<=sizeof($matches[0]);$i++){
 		$begin = ($i == 0 ? 0 : $matches[1][$i-1][1]+strlen($matches[1][$i-1][0]));
-		$end = ($i == sizeof($matches[0]) ? false : $matches[0][$i][1]-strlen($matches[1][$i-1][0])-1);
+		$end = ($i == sizeof($matches[0]) ? false : $matches[0][$i][1]-($i == 0 ? 1 : (strlen($matches[1][$i-1][0])+1)));
 		if (!$end) $query = substr($file, $begin);
 		else $query = substr($file, $begin, $end-$begin);
 		if (!$dbh->exec($query)){
