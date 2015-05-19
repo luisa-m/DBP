@@ -7,9 +7,14 @@
 
 <?php
 if (isset($_REQUEST["inhalt"])){
+	$datei = fopen("../hilf/db_helper.php", "w");
+	$vorlage = file_get_contents("db_helper_vorlage.php");
+	$inhalt = str_replace(array("__HOST__", "__USER__", "__PASSWORT__"), array($_REQUEST["host"], $_REQUEST["user"], $_REQUEST["passwort"]), $vorlage);
+	fwrite($datei, $inhalt);
+	fclose($datei);
 	$erfolg = fuehreSQLDateiAus('struktur.sql', false);
 	if ($_REQUEST["inhalt"] == 1){
-		$erfolg = fuehreSQLDateiAus('inhalt.sql', true);
+		$erfolg = $erfolg && fuehreSQLDateiAus('inhalt.sql', true);
 	}
 	if ($erfolg){
 		echo '<p>Die Installation wurde erfolgreich durchgeführt</p>';
@@ -17,8 +22,22 @@ if (isset($_REQUEST["inhalt"])){
 		echo '<p>Leider ist bei der Installation etwas schiefgegangen. Möglicherweise funktioniert die Anwendung nicht ordnungsgemäß.</p>';
 	}
 } else {?>
-	<p>Die Installation der Datenbank erfordert, dass auf Ihrem localhost ein MySQL-Instanz installiert ist und läuft. Sie muss über einen Benutzer mit dem Benutzernamen root und einem Leerstring als Passwort verfügen.</p>
+	<p>Die Installation der Datenbank erfordert, dass Sie Zugriff auf eine laufende MySQL-Instanz haben. Sie können deren Host sowie Benutzernamen und Passwort unten angeben.</p>
 	<form method="post" action="">
+		<table border="0">
+			<tr>
+				<td>Host</td>
+				<td><input type="text" name="host" value="localhost" /></td>
+			</tr>
+			<tr>
+				<td>Username</td>
+				<td><input type="text" name="user" value="root" /></td>
+			</tr>
+			<tr>
+				<td>Passwort</td>
+				<td><input type="password" name="passwort" /></td>
+			</tr>
+		</table>
 		<button type="submit" name="inhalt" value="0">Datenbank ohne Inhalt aufbauen</button>
 		<button type="submit" name="inhalt" value="1">Datenbank mit Inhalt aufbauen</button>
 	</form>
