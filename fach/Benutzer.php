@@ -147,10 +147,18 @@ class Benutzer implements JsonSerializable {
 	public function folgen($nickname){
 		require_once("/../hilf/db_helper.php");
 		$dbh = db_connect();
-		$stmt = $dbh->prepare("INSERT INTO folgen(Folgender, Gefolgter) VALUES(:Folgender,:Gefolgter)");
-		$stmt->bindParam(':Folgender', htmlspecialchars($this->id));
+		$stmt = $dbh->prepare("SELECT COUNT(*) AS Anzahl FROM benutzer WHERE nickname = :Gefolgter");
 		$stmt->bindParam(':Gefolgter', htmlspecialchars($nickname));
 		$stmt->execute();
+		$res = $stmt->fetch();
+		if ($res["Anzahl"] == 0){
+			throw new Exception("userNichtVorhanden");
+		} else {
+			$stmt = $dbh->prepare("INSERT INTO folgen(Folgender, Gefolgter) VALUES(:Folgender,:Gefolgter)");
+			$stmt->bindParam(':Folgender', htmlspecialchars($this->id));
+			$stmt->bindParam(':Gefolgter', htmlspecialchars($nickname));
+			$stmt->execute();
+		}
 	}
 	
 	/**

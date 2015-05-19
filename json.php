@@ -30,7 +30,7 @@ elseif($path[0] == "folgen")
 		$benutzer->folgen($path[1]);
 		echo "+ok";
 	} catch (Exception $e) {
-		echo "-err".$e->getMessage();
+		echo "-err ".$e->getMessage();
 	}
 }
 ?>

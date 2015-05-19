@@ -79,6 +79,10 @@ function folgeBenutzer(benutzername, folgenElem, nachrichtenElem) {
 			if (req.responseText == "+ok") {
 				zeigeGefolgte(folgenElem);
 				zeigeTimeline(nachrichtenElem);
+			} else if (req.responseText == "-err userNichtVorhanden") {
+				alert('Ein Benutzer mit dem Nicknamen "' + benutzername + '" existiert nicht');
+			} else {
+				alert('Es ist ein unbekannter Fehler aufgetreten: ' + req.responseText);
 			}
 		}
 	};
