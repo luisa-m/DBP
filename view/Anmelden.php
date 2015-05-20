@@ -42,7 +42,7 @@ if(!isset($_REQUEST["einloggen"]) || isset($Fehlermeldung))
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Kikeriki! Bitte loggen Sie sich ein</title>
+	<title>Kikeriki! Bitte logge dich ein</title>
 	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<link rel="shortcut icon" type="image/x-icon" href="Icon.png">
 </head>
