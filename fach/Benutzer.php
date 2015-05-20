@@ -151,6 +151,7 @@ class Benutzer implements JsonSerializable {
 		$stmt->bindParam(':Gefolgter', htmlspecialchars($nickname));
 		$stmt->execute();
 		$res = $stmt->fetch();
+		// Eine Exception werfen, wenn es den Benutzer nicht gibt
 		if ($res["Anzahl"] == 0){
 			throw new Exception("userNichtVorhanden");
 		} else {

@@ -20,6 +20,7 @@ class Nachricht implements JsonSerializable {
 		$stmt->execute();
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->inhalt = $res["Inhalt"];
+		// Passenden Benutzer setzen
 		if ($benutzer == null){
 			$this->benutzer = Benutzer::getBenutzer($res["Benutzer"]);
 		} else {

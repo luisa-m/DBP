@@ -52,9 +52,14 @@ function fuehreSQLDateiAus($path, $selectDatabase){
 	else $dbh = db_connect_wo_database();	
 	$file = file_get_contents($path);
 	$delim = ';';
+	
+	// Suche alle Änderungen des Begrenzers
 	preg_match_all('/DELIMITER (.*)(\s|$)/', $file, $matches, PREG_OFFSET_CAPTURE);
+	// Jeweils bis zur nächsten Delimiter-Änderung ausführen
 	for ($i=0;$i<=sizeof($matches[0]);$i++){
-		$begin = ($i == 0 ? 0 : $matches[1][$i-1][1]+strlen($matches[1][$i-1][0]));
+		// Anfang = Erstes Zeichen nach letzter Delimiter-Änderung
+		$begin = ($i == 0 ? 0 : $matches[1][$i-1][1]+strlen($matches[1][$i-1][0]));		
+		// Ende = Letztes Zeichen vor letztem Delimiter vor Delimiter-Änderung
 		$end = ($i == sizeof($matches[0]) ? false : $matches[0][$i][1]-($i == 0 ? 1 : (strlen($matches[1][$i-1][0])+1)));
 		if (!$end) $query = substr($file, $begin);
 		else $query = substr($file, $begin, $end-$begin);

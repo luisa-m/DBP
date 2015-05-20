@@ -27,7 +27,7 @@ if(isset($_REQUEST["registrieren"]))
 		}
 	}
 	else {
-		$Fehlermeldung = "Die Passwörter stimmen nicht überein. Bitte überprüfen Sie Ihre Eingaben.";
+		$Fehlermeldung = "Die Passwörter stimmen nicht überein. Bitte überprüfe deine Eingabe.";
 	}
 }
 
